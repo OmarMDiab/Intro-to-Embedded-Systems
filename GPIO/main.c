@@ -16,8 +16,7 @@ while(1){
     // Read the 2 switches pins
     int sw1 = DIO_ReadPin(0);
     int sw2 = DIO_ReadPin(4); 
-
-
+    
 // Task1 Main    
 #ifdef Task1
     

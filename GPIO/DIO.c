@@ -27,6 +27,11 @@ void DIO_Init() {
    GPIO_PORTF_DEN_R = 0x1F;
 }
 
+// Read/Write Pins
+int DIO_ReadPin(int bit){
+  return get_Bit(GPIO_PORTF_DATA_R, bit);
+}
+
 void DIO_WritePin(int bit, int value){
   if(value == 1){
     set_Bit(GPIO_PORTF_DATA_R, bit);
@@ -37,21 +42,18 @@ void DIO_WritePin(int bit, int value){
 
 }
 
+// Read/Write Ports
+int DIO_ReadPort(int mask) {
+    // Apply the mask to extract the specific bits of interest
+    return GPIO_PORTF_DATA_R & mask;
+}
+
 void DIO_WritePort(int mask, int value) {
     // Clear the bits specified in the mask while preserving the rest of the bits
     GPIO_PORTF_DATA_R = (GPIO_PORTF_DATA_R & ~mask);
     
     // Set the bits according to the data value and the mask
     GPIO_PORTF_DATA_R |= (value & mask);
-}
-
-int DIO_ReadPin(int bit){
-  return get_Bit(GPIO_PORTF_DATA_R, bit);
-}
-
-int DIO_ReadPort(int mask) {
-    // Apply the mask to extract the specific bits of interest
-    return GPIO_PORTF_DATA_R & mask;
 }
 
   // lit LED Control: -
