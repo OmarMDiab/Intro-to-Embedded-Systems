@@ -2,7 +2,7 @@
 #include "DIO.h"
 
 // Lab 4
-#define Task2
+#define Task1_evenORodd
     
 int main()
 {
@@ -100,7 +100,6 @@ while(1){
    // Task 1 LMS: -
 #ifdef Task1_evenORodd
    // where even = blue and odd = Red
-   
    int even_odd[5]={3,6,5,7,10}; 
    
    if(!sw1 || !sw2){
@@ -112,7 +111,6 @@ while(1){
         lit_LED(1); // Red
      
      i++;
-   
    }
    
    // loop again through array :)
