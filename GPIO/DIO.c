@@ -28,65 +28,67 @@ void DIO_Init() {
 }
 
 // Read/Write Pins
-int DIO_ReadPin(int bit){
-  return get_Bit(GPIO_PORTF_DATA_R, bit);
+int DIO_ReadPin(volatile unsigned long *reg,int bit){
+  int value = *reg;
+  return get_Bit(value, bit);
 }
 
-void DIO_WritePin(int bit, int value){
+void DIO_WritePin(volatile unsigned long *reg,int bit, int value){
   if(value == 1){
-    set_Bit(GPIO_PORTF_DATA_R, bit);
+    set_Bit(*reg, bit);
   }
   else{
-    clear_Bit(GPIO_PORTF_DATA_R, bit);
+    clear_Bit(*reg, bit);
   }
 
 }
 
+
 // Read/Write Ports
-int DIO_ReadPort(int mask) {
-    // Apply the mask to extract the specific bits of interest
-    return GPIO_PORTF_DATA_R & mask;
+int DIO_ReadPort(volatile unsigned long *reg, int mask) {
+    // Read the value from the register and then apply the mask
+    return *reg & mask;
 }
 
-void DIO_WritePort(int mask, int value) {
+void DIO_WritePort(volatile unsigned long *reg,int mask, int value) {
     // Clear the bits specified in the mask while preserving the rest of the bits
-    GPIO_PORTF_DATA_R = (GPIO_PORTF_DATA_R & ~mask);
+    *reg = (*reg & ~mask);
     
     // Set the bits according to the data value and the mask
-    GPIO_PORTF_DATA_R |= (value & mask);
+    *reg |= (value & mask);
 }
 
   // lit LED Control: -
 void lit_LED(int color){
   // lit red
   if (color==1){
-  DIO_WritePin(1,1);
-  DIO_WritePin(2,0);
-  DIO_WritePin(3,0);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,1,1);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,2,0);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,3,0);
   }
   // lit blue
   else if (color ==2){
-  DIO_WritePin(1,0);
-  DIO_WritePin(2,1);
-  DIO_WritePin(3,0);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,1,0);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,2,1);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,3,0);
   }
   // lit green
   else if (color ==3){
-  DIO_WritePin(1,0);
-  DIO_WritePin(2,0);
-  DIO_WritePin(3,1);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,1,0);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,2,0);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,3,1);
   }
   // lit white
   else if (color == 10){
-  DIO_WritePin(1,1);
-  DIO_WritePin(2,1);
-  DIO_WritePin(3,1);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,1,1);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,2,1);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,3,1);
   }
   // TURN all off
   else if (color == 0){
-  DIO_WritePin(1,0);
-  DIO_WritePin(2,0);
-  DIO_WritePin(3,0);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,1,0);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,2,0);
+  DIO_WritePin(&GPIO_PORTF_DATA_R,3,0);
   }
 
 }
@@ -95,19 +97,19 @@ void lit_LED(int color){
 int getcolor(){
   int color_index=0; // normally all [off]
   
-  if (DIO_ReadPin(1) && DIO_ReadPin(2) && DIO_ReadPin(3)){
+  if (DIO_ReadPin(&GPIO_PORTF_DATA_R,1) && DIO_ReadPin(&GPIO_PORTF_DATA_R,2) && DIO_ReadPin(&GPIO_PORTF_DATA_R,3)){
   color_index=10; // white
   }
       
-  else if (DIO_ReadPin(1)){
+  else if (DIO_ReadPin(&GPIO_PORTF_DATA_R,1)){
   color_index=1; // RED
   }
   
-else if (DIO_ReadPin(2)){
+else if (DIO_ReadPin(&GPIO_PORTF_DATA_R,2)){
   color_index=2; // Blue
   }
             
-else if(DIO_ReadPin(3)){
+else if(DIO_ReadPin(&GPIO_PORTF_DATA_R,3)){
 color_index=3; // Green
 }
   return color_index;

@@ -18,8 +18,8 @@ int main()
 while(1){    
 
     // Read the 2 switches pins
-    int sw1 = DIO_ReadPin(0);
-    int sw2 = DIO_ReadPin(4); 
+    int sw1 = DIO_ReadPin(&GPIO_PORTF_DATA_R,0);
+    int sw2 = DIO_ReadPin(&GPIO_PORTF_DATA_R,4); 
     
 // Task1 Toggle:-     
 #ifdef Task1
@@ -120,14 +120,9 @@ while(1){
    for(int i=0; i <1000000;i++){}  // (Delay) 
    
 #endif   
-   
-   
-   
-   
+      
 } // while end
 
 
   return 0;
-}
-       
- 
+} 
