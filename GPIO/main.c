@@ -1,6 +1,12 @@
 #include "tm4c123gh6pm.h"
 #include "DIO.h"
 
+void delay(unsigned long time) {
+    while (time > 0)
+        time--;
+    
+}
+
 // Lab 4
 #define Task1_evenORodd
     
@@ -33,8 +39,7 @@ while(1){
     else if(sw1 == 0 && sw2 == 0){
      lit_LED(3); // Green
      
-   for(int i=0; i <1000000;i++){}  // Delay
-    }
+   delay(1000000);
 #endif
 
 
@@ -93,7 +98,7 @@ while(1){
    lit_LED(10); // white
    }
    
-    for(int i=0; i <1000000;i++){}  // (Delay for FSM)           
+   delay(1000000);  // (Delay for FSM)           
    
 #endif    
 
@@ -117,7 +122,7 @@ while(1){
    if (i>4)
      i=0;
    
-   for(int i=0; i <1000000;i++){}  // (Delay) 
+   delay(1000000);  // (Delay) 
    
 #endif   
       
