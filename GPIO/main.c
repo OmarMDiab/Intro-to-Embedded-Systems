@@ -4,7 +4,6 @@
 void delay(unsigned long time) {
     while (time > 0)
         time--;
-    
 }
 
 // Lab 4
@@ -27,6 +26,8 @@ while(1){
     int sw1 = DIO_ReadPin(&GPIO_PORTF_DATA_R,0);
     int sw2 = DIO_ReadPin(&GPIO_PORTF_DATA_R,4); 
     
+    
+  /*  ---------LAB A----  */  
 // Task1 Toggle:-     
 #ifdef Task1
     
@@ -92,17 +93,16 @@ while(1){
      }
    }
    
+   /*----------LAB B--------*/
    // task2 LMS: -
    // if pressed 2 switches it will return to white whatever state we are in 
    if (!sw1 && !sw2){
    lit_LED(10); // white
-   }
-   
-   delay(1000000);  // (Delay for FSM)           
-   
+   }  
+   delay(1000000);  // (Button Delay)              
 #endif    
 
-   // Task 1 LMS: -
+   // Task 1 LAbB: -
 #ifdef Task1_evenORodd
    // where even = blue and odd = Red
    int even_odd[5]={3,6,5,7,10}; 
@@ -122,7 +122,7 @@ while(1){
    if (i>4)
      i=0;
    
-   delay(1000000);  // (Delay) 
+   delay(1000000);  // (Button Delay) 
    
 #endif   
       
